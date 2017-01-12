@@ -1,0 +1,19 @@
+version: '2'
+
+services:
+  openhab:
+    image: "openhab/openhab:amd64-online"
+    restart: always
+    ports:
+      - "8080:8080"
+      - "8443:8443"
+      - "5555:5555"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - openhab_data:/openhab/userdata
+      - openhab_conf:/openhab/conf
+    command: "server"
+
+volumes:
+  openhab_data:
+  openhab_conf:
