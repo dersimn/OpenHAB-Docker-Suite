@@ -3,6 +3,9 @@ version: '2'
 services:
   openhab:
     image: "openhab/openhab:amd64-online"
+    depends_on:
+      - influxdb
+      - mysql
     restart: always
     ports:
       - "8080:8080"
@@ -13,3 +16,48 @@ services:
       - ./openhab_data:/openhab/userdata
       - ./openhab_conf:/openhab/conf
     command: "server"
+  influxdb:
+    image: influxdb:latest
+    volumes:
+      - ./influxdb_data:/var/lib/influxdb
+    restart: always
+    ports:
+      - "8083:8083"
+      - "8086:8086"
+    environment:
+      INFLUXDB_ADMIN_ENABLED: "true"
+  mysql:
+    image: mysql:latest
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: "secret"
+      MYSQL_DATABASE: openhab
+      MYSQL_USER: openhab
+      MYSQL_PASSWORD: openhab
+  grafana:
+    depends_on:
+      - influxdb
+    image: grafana/grafana:latest
+    restart: always
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./grafana_data:/var/lib/grafana
+    environment:
+      GF_SECURITY_ADMIN_USER: "simon"
+      GF_SECURITY_ADMIN_PASSWORD: "secret"
+      GF_USERS_ALLOW_SIGN_UP: "false"
+#      GF_SERVER_DOMAIN: "home.simon-christmann.de"
+#      GF_SERVER_ROOT_URL: "http://localhost:3000/grafana"
+      GF_USERS_DEFAULT_THEME: "light"
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_BASIC_ENABLED: "false"
+
+
+
+
+
+
+

@@ -1,2 +1,5 @@
 /openhab_conf
 /openhab_data
+/grafana_data
+/influxdb_data
+/mysql_data
