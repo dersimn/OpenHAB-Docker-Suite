@@ -1,6 +1,21 @@
 version: '2'
 
 services:
+  nginx:
+    image: nginx:latest
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx_html:/html
+      - ./nginx_conf:/etc/nginx/conf.d
+      - ./nginx_ssl:/etc/nginx/ssl
+      - ./nginx_auth:/etc/nginx/auth
+  php:
+    image: php:fpm
+    volumes:
+      - ./nginx_html:/html
   openhab:
     image: "openhab/openhab:amd64-online"
     depends_on:
@@ -8,8 +23,8 @@ services:
       - mysql
     restart: always
     ports:
-      - "8080:8080"
-      - "8443:8443"
+#      - "8080:8080"
+#      - "8443:8443"
       - "5555:5555"
     volumes:
       - /etc/localtime:/etc/localtime:ro
@@ -21,9 +36,9 @@ services:
     volumes:
       - ./influxdb_data:/var/lib/influxdb
     restart: always
-    ports:
-      - "8083:8083"
-      - "8086:8086"
+#    ports:
+#      - "8083:8083"
+#      - "8086:8086"
     environment:
       INFLUXDB_ADMIN_ENABLED: "true"
   mysql:
@@ -41,8 +56,8 @@ services:
       - influxdb
     image: grafana/grafana:latest
     restart: always
-    ports:
-      - "3000:3000"
+#    ports:
+#      - "3000:3000"
     volumes:
       - ./grafana_data:/var/lib/grafana
     environment:
