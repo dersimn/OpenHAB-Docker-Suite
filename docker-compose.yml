@@ -41,6 +41,7 @@ services:
 #      - "8086:8086"
     environment:
       INFLUXDB_ADMIN_ENABLED: "true"
+      INFLUXDB_HTTP_AUTH_ENABLED: "true"
   mysql:
     image: mysql:latest
     volumes:
@@ -65,7 +66,7 @@ services:
       GF_SECURITY_ADMIN_PASSWORD: "secret"
       GF_USERS_ALLOW_SIGN_UP: "false"
 #      GF_SERVER_DOMAIN: "home.simon-christmann.de"
-#      GF_SERVER_ROOT_URL: "http://localhost:3000/grafana"
+      GF_SERVER_ROOT_URL: "http://localhost:3000/grafana"
       GF_USERS_DEFAULT_THEME: "light"
       GF_AUTH_ANONYMOUS_ENABLED: "true"
       GF_AUTH_BASIC_ENABLED: "false"
