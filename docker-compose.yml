@@ -17,7 +17,7 @@ services:
     volumes:
       - ./nginx_html:/html
   openhab:
-    image: "openhab/openhab:amd64-online"
+    image: "openhab/openhab:amd64"
     depends_on:
       - influxdb
       - mysql
