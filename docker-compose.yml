@@ -2,7 +2,7 @@ version: '2'
 
 services:
   nginx:
-    image: nginx:latest
+    image: nginx
     restart: always
     ports:
       - "80:80"
@@ -17,7 +17,7 @@ services:
     volumes:
       - ./nginx_html:/html
   openhab:
-    image: "openhab/openhab:amd64"
+    image: "openhab/openhab:2.0.0-amd64"
     depends_on:
       - influxdb
       - mysql
@@ -33,7 +33,7 @@ services:
       - ./openhab_conf:/openhab/conf
     command: "server"
   influxdb:
-    image: influxdb:latest
+    image: influxdb
     volumes:
       - ./influxdb_data:/var/lib/influxdb
     restart: always
@@ -44,7 +44,7 @@ services:
       INFLUXDB_ADMIN_ENABLED: "true"
       INFLUXDB_HTTP_AUTH_ENABLED: "true"
   mysql:
-    image: mysql:latest
+    image: mysql
     volumes:
       - ./mysql_data:/var/lib/mysql
     restart: always
@@ -56,7 +56,7 @@ services:
   grafana:
     depends_on:
       - influxdb
-    image: grafana/grafana:latest
+    image: grafana/grafana
     restart: always
 #    ports:
 #      - "3000:3000"
