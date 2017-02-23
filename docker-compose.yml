@@ -10,11 +10,11 @@ services:
       - "80:80"
       - "443:443"
     volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
       - /Users/simon/Library/Docker/OpenHAB/Nginx/www:/html
-      - /Users/simon/Library/Docker/OpenHAB/Nginx/default.conf:/etc/nginx/conf.d/default.conf
-      - /Users/simon/Library/Docker/OpenHAB/Nginx/home.simon-christmann.de.chained.crt:/etc/nginx/ssl/cert-chain.crt
-      - /Users/simon/Library/Docker/OpenHAB/Nginx/home.simon-christmann.de.key:/etc/nginx/ssl/key.key
-      - /Users/simon/Library/Docker/OpenHAB/Nginx/htpasswd:/etc/nginx/auth/htpasswd
+      - /Users/simon/Library/Docker/OpenHAB/Nginx/home.simon-christmann.de.chained.crt:/etc/nginx/chained.crt:ro
+      - /Users/simon/Library/Docker/OpenHAB/Nginx/home.simon-christmann.de.key:/etc/nginx/key.key:ro
+      - /Users/simon/Library/Docker/OpenHAB/Nginx/htpasswd:/etc/nginx/htpasswd:ro
   php:
     image: php:fpm
     volumes:
