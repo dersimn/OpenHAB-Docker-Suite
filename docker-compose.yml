@@ -28,10 +28,9 @@ services:
     restart: always
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
       - /Users/simon/Library/Docker/OpenHAB/OpenHAB/config:/openhab/conf
-      - /Users/simon/Library/Docker/OpenHAB/OpenHAB/log:/var/log/openhab2
-      - openhab_data:/var/lib/openhab2
+      - openhab_data:/openhab/userdata
+      - /Users/simon/Library/Docker/OpenHAB/OpenHAB/log:/openhab/userdata/logs
   influxdb:
     image: influxdb
     volumes:
