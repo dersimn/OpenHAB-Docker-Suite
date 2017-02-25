@@ -35,7 +35,7 @@ services:
   influxdb:
     image: influxdb
     volumes:
-      - influxdb_data:/var/lib/influxdb
+      - /Users/${USER}/Library/Docker/OpenHAB/InfluxDB:/var/lib/influxdb
     restart: always
     environment:
       INFLUXDB_ADMIN_ENABLED: "true"
