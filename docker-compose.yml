@@ -30,6 +30,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - /Users/${USER}/Library/Docker/OpenHAB/OpenHAB/config:/openhab/conf
       - openhab_data:/openhab/userdata
+      - /Users/${USER}/Library/Docker/OpenHAB/OpenHAB/persist:/openhab/userdata/
       - /Users/${USER}/Library/Docker/OpenHAB/OpenHAB/log:/openhab/userdata/logs
   influxdb:
     image: influxdb
@@ -43,7 +44,7 @@ services:
     image: mysql
     command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci --init-connect='SET NAMES UTF8;'
     volumes:
-      - mysql_data:/var/lib/mysql
+      - /Users/${USER}/Library/Docker/OpenHAB/MySQL:/var/lib/mysql
     restart: always
     ports:
       - "3306:3306"
@@ -56,7 +57,7 @@ services:
     image: grafana/grafana
     restart: always
     volumes:
-      - grafana_data:/var/lib/grafana
+      - /Users/${USER}/Library/Docker/OpenHAB/Grafana:/var/lib/grafana
     environment:
       GF_SECURITY_ADMIN_USER: "simon"
       GF_SECURITY_ADMIN_PASSWORD: "secret"
@@ -73,7 +74,4 @@ services:
       - "1883:1883"
       - "9001:9001"
 volumes:
-  mysql_data:
-  influxdb_data:
-  grafana_data:
   openhab_data:
