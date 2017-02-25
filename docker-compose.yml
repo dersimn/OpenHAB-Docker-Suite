@@ -11,14 +11,14 @@ services:
       - "443:443"
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
-      - /Users/simon/Library/Docker/OpenHAB/Nginx/www:/html
-      - /Users/simon/Library/Docker/OpenHAB/Nginx/home.simon-christmann.de.chained.crt:/etc/nginx/chained.crt:ro
-      - /Users/simon/Library/Docker/OpenHAB/Nginx/home.simon-christmann.de.key:/etc/nginx/key.key:ro
-      - /Users/simon/Library/Docker/OpenHAB/Nginx/htpasswd:/etc/nginx/htpasswd:ro
+      - /Users/${USER}/Library/Docker/OpenHAB/Nginx/www:/html
+      - /Users/${USER}/Library/Docker/OpenHAB/Nginx/home.simon-christmann.de.chained.crt:/etc/nginx/chained.crt:ro
+      - /Users/${USER}/Library/Docker/OpenHAB/Nginx/home.simon-christmann.de.key:/etc/nginx/key.key:ro
+      - /Users/${USER}/Library/Docker/OpenHAB/Nginx/htpasswd:/etc/nginx/htpasswd:ro
   php:
     image: php:fpm
     volumes:
-      - /Users/simon/Library/Docker/OpenHAB/Nginx/www:/html  
+      - /Users/${USER}/Library/Docker/OpenHAB/Nginx/www:/html  
   openhab:
     image: "openhab/openhab:2.0.0-amd64"
     depends_on:
@@ -28,9 +28,9 @@ services:
     restart: always
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - /Users/simon/Library/Docker/OpenHAB/OpenHAB/config:/openhab/conf
+      - /Users/${USER}/Library/Docker/OpenHAB/OpenHAB/config:/openhab/conf
       - openhab_data:/openhab/userdata
-      - /Users/simon/Library/Docker/OpenHAB/OpenHAB/log:/openhab/userdata/logs
+      - /Users/${USER}/Library/Docker/OpenHAB/OpenHAB/log:/openhab/userdata/logs
   influxdb:
     image: influxdb
     volumes:
@@ -41,9 +41,12 @@ services:
       INFLUXDB_HTTP_AUTH_ENABLED: "true"
   mysql:
     image: mysql
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci --init-connect='SET NAMES UTF8;'
     volumes:
       - mysql_data:/var/lib/mysql
     restart: always
+    ports:
+      - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: "root"
       MYSQL_DATABASE: openhab
