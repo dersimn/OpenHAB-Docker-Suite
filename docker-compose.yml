@@ -26,16 +26,21 @@ services:
       - mysql
       - mosquitto
     restart: always
+    ports:
+      - "9125:9125"
+      - "9126:9126"
     volumes:
       - /etc/localtime:/etc/localtime:ro
+      - ./timezone:/etc/timezone:ro
       - /Users/${USER}/Library/Docker/OpenHAB/OpenHAB/config:/openhab/conf
       - openhab_data:/openhab/userdata
-      - /Users/${USER}/Library/Docker/OpenHAB/OpenHAB/persist:/openhab/userdata/
+      - /Users/${USER}/Library/Docker/OpenHAB/OpenHAB/persist:/openhab/userdata/persistence/rrd4j
       - /Users/${USER}/Library/Docker/OpenHAB/OpenHAB/log:/openhab/userdata/logs
   influxdb:
     image: influxdb
     volumes:
       - /Users/${USER}/Library/Docker/OpenHAB/InfluxDB:/var/lib/influxdb
+      - ./Backups:/backups
     restart: always
     environment:
       INFLUXDB_ADMIN_ENABLED: "true"
@@ -45,6 +50,7 @@ services:
     command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci --init-connect='SET NAMES UTF8;'
     volumes:
       - /Users/${USER}/Library/Docker/OpenHAB/MySQL:/var/lib/mysql
+      - ./Backups:/backups
     restart: always
     ports:
       - "3306:3306"
