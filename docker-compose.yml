@@ -37,12 +37,12 @@ services:
       - openhab_data:/openhab/userdata
       - ~/Library/Docker/OpenHAB/OpenHAB/persist:/openhab/userdata/persistence/rrd4j
       - ~/Library/Docker/OpenHAB/OpenHAB/log:/openhab/userdata/logs
-      - ./Backups:/backups
+      - ./backup:/backups
   influxdb:
     image: influxdb
     volumes:
       - ~/Library/Docker/OpenHAB/InfluxDB:/var/lib/influxdb
-      - ./Backups:/backups
+      - ./backup:/backups
     restart: always
     environment:
       INFLUXDB_ADMIN_ENABLED: "true"
@@ -52,7 +52,7 @@ services:
     command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci --init-connect='SET NAMES UTF8;'
     volumes:
       - ~/Library/Docker/OpenHAB/MySQL:/var/lib/mysql
-      - ./Backups:/backups
+      - ./backup:/backups
     restart: always
     ports:
       - "3306:3306"
@@ -66,7 +66,7 @@ services:
     restart: always
     volumes:
       - ~/Library/Docker/OpenHAB/Grafana:/var/lib/grafana
-      - ./Backups:/backups
+      - ./backup:/backups
     environment:
       GF_SECURITY_ADMIN_USER: "simon"
       GF_SECURITY_ADMIN_PASSWORD: "secret"
