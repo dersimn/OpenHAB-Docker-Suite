@@ -1,14 +1,21 @@
 OpenHAB Docker Suite
 ====================
 
+This is my `docker-compose` suite for deploying OpenHAB and a few other services on macOS / Mac OS X or however you want to call it.  
+We'll use `~/Library/Docker/OpenHAB` to store configuration/persistence related files.
+
+I'm currently not using the PaperUI for configuration, but instead specify everything manually in the according `.items`-, `.things`-, and-so-on- files. The database for any PaperUI configuration is therefore **not** placed inside the `~/Library`, but still persisted inside of a [named docker volume][3].
+
 ## Install
 
-Git-clone this repository for e.g. into `~/Applications/Docker`. Before starting your containers **create at least one htpasswd file and an SSL certificate**:
-
-	openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ~/Library/Docker/OpenHAB/Nginx/nginx-ssl.key -out ~/Library/Docker/OpenHAB/Nginx/nginx-ssl.crt
+Git-clone this repository for e.g. into `~/Applications/Docker`. Before starting your containers **create at least one htpasswd user** by executing the two commands for each user
 
 	echo -n 'user01:' >> ~/Library/Docker/OpenHAB/Nginx/htpasswd
 	openssl passwd -apr1 >> ~/Library/Docker/OpenHAB/Nginx/htpasswd
+
+**and one SSL certificate**: 
+
+	openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ~/Library/Docker/OpenHAB/Nginx/nginx-ssl.key -out ~/Library/Docker/OpenHAB/Nginx/nginx-ssl.crt
 
 Then start all containers by executing:
 
@@ -69,3 +76,4 @@ Inside the container execute the following queries:
 
 [1]: https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-nginx-in-ubuntu-16-04
 [2]: https://www.digitalocean.com/community/tutorials/how-to-set-up-password-authentication-with-nginx-on-ubuntu-14-04
+[3]: https://docs.docker.com/engine/tutorials/dockervolumes/
