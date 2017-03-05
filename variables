@@ -1,4 +1,1 @@
 HOSTNAME="localhost"
-
-CONF_DIR="~/Library/Docker/"
-#CONF_DIR="./sample-conf"
