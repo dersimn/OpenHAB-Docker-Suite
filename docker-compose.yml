@@ -17,6 +17,7 @@ services:
       - /Users/${USER}/Library/Docker/OpenHAB/Nginx/htpasswd:/etc/nginx/htpasswd:ro
   php:
     image: php:fpm
+    restart: always
     volumes:
       - /Users/${USER}/Library/Docker/OpenHAB/Nginx/www:/html  
   openhab:
