@@ -1,0 +1,9 @@
+Strategies {
+	// for rrd charts, we need a cron strategy
+	everyMinute : "0 * * * * ?"
+}
+
+Items {
+	// Save everything
+	* : strategy = everyMinute, restoreOnStartup
+}

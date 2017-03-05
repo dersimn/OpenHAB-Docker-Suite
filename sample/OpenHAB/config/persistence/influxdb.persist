@@ -1,0 +1,20 @@
+Strategies {
+	everyHour 	: "0 0 * * * ?"
+	everyDay 	: "0 0 0 * * ?"
+	everyMinute : "0 * * * * ?"
+	every10mins : "0 */10 * * * ?"
+
+	// if no strategy is specified for an item entry below, the default list will be used
+	default = everyChange
+}
+
+Items {
+	Database* : strategy = everyChange, everyMinute
+	Heating* : strategy = everyChange, everyMinute
+	Temperature* : strategy = everyChange, everyMinute
+	Security* : strategy = everyChange, everyMinute
+	Presence* : strategy = everyChange, everyMinute
+
+	// Weather Services update their data just every 10mins anyway
+	Weather* : strategy = everyChange, every10mins
+}
