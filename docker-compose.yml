@@ -11,15 +11,15 @@ services:
       - "443:443"
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
-      - /Users/${USER}/Library/Docker/OpenHAB/Nginx/www:/html
-      - /Users/${USER}/Library/Docker/OpenHAB/Nginx/home.simon-christmann.de.chained.crt:/etc/nginx/chained.crt:ro
-      - /Users/${USER}/Library/Docker/OpenHAB/Nginx/home.simon-christmann.de.key:/etc/nginx/key.key:ro
-      - /Users/${USER}/Library/Docker/OpenHAB/Nginx/htpasswd:/etc/nginx/htpasswd:ro
+      - ~/Library/Docker/OpenHAB/Nginx/www:/html
+      - ~/Library/Docker/OpenHAB/Nginx/nginx-ssl.crt:/etc/nginx/chained.crt:ro
+      - ~/Library/Docker/OpenHAB/Nginx/nginx-ssl.key:/etc/nginx/key.key:ro
+      - ~/Library/Docker/OpenHAB/Nginx/htpasswd:/etc/nginx/htpasswd:ro
   php:
     image: php:fpm
     restart: always
     volumes:
-      - /Users/${USER}/Library/Docker/OpenHAB/Nginx/www:/html  
+      - ~/Library/Docker/OpenHAB/Nginx/www:/html  
   openhab:
     image: "openhab/openhab:2.0.0-amd64"
     depends_on:
@@ -33,14 +33,15 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ./timezone:/etc/timezone:ro
-      - /Users/${USER}/Library/Docker/OpenHAB/OpenHAB/config:/openhab/conf
+      - ~/Library/Docker/OpenHAB/OpenHAB/config:/openhab/conf
       - openhab_data:/openhab/userdata
-      - /Users/${USER}/Library/Docker/OpenHAB/OpenHAB/persist:/openhab/userdata/persistence/rrd4j
-      - /Users/${USER}/Library/Docker/OpenHAB/OpenHAB/log:/openhab/userdata/logs
+      - ~/Library/Docker/OpenHAB/OpenHAB/persist:/openhab/userdata/persistence/rrd4j
+      - ~/Library/Docker/OpenHAB/OpenHAB/log:/openhab/userdata/logs
+      - ./Backups:/backups
   influxdb:
     image: influxdb
     volumes:
-      - /Users/${USER}/Library/Docker/OpenHAB/InfluxDB:/var/lib/influxdb
+      - ~/Library/Docker/OpenHAB/InfluxDB:/var/lib/influxdb
       - ./Backups:/backups
     restart: always
     environment:
@@ -50,7 +51,7 @@ services:
     image: mysql
     command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci --init-connect='SET NAMES UTF8;'
     volumes:
-      - /Users/${USER}/Library/Docker/OpenHAB/MySQL:/var/lib/mysql
+      - ~/Library/Docker/OpenHAB/MySQL:/var/lib/mysql
       - ./Backups:/backups
     restart: always
     ports:
@@ -64,7 +65,8 @@ services:
     image: grafana/grafana
     restart: always
     volumes:
-      - /Users/${USER}/Library/Docker/OpenHAB/Grafana:/var/lib/grafana
+      - ~/Library/Docker/OpenHAB/Grafana:/var/lib/grafana
+      - ./Backups:/backups
     environment:
       GF_SECURITY_ADMIN_USER: "simon"
       GF_SECURITY_ADMIN_PASSWORD: "secret"
