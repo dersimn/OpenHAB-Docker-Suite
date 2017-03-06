@@ -8,7 +8,9 @@ I'm currently not using the PaperUI for configuration, but instead specify every
 
 ## Install
 
-Git-clone this repository for e.g. into `~/Applications/Docker`. Before starting your containers **create at least one htpasswd user** by executing the two commands for each user
+Git-clone this repository for e.g. into `~/Applications/Docker`.
+
+Before starting your containers **create at least one htpasswd user** by executing the two commands for each user (create the directory first: `mkdir -p ~/Library/Docker/OpenHAB/Nginx`)
 
 	echo -n 'user01:' >> ~/Library/Docker/OpenHAB/Nginx/htpasswd
 	openssl passwd -apr1 >> ~/Library/Docker/OpenHAB/Nginx/htpasswd
