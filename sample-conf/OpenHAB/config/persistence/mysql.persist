@@ -9,5 +9,5 @@ Strategies {
 
 Items {
 	// Save everything
-	* : strategy = everyChange, everyMinute
+	* : strategy = everyChange
 }
