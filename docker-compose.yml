@@ -31,13 +31,11 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - ./timezone:/etc/timezone:ro
       - ./sample-conf/OpenHAB/config:/openhab/conf
-      - ./sample-conf/OpenHAB/persist:/openhab/userdata/persistence/rrd4j
       - ./sample-conf/OpenHAB/log:/openhab/userdata/logs
       - ./backup:/backups
   influxdb:
     image: influxdb
     volumes:
-      - ./sample-conf/InfluxDB:/var/lib/influxdb
       - ./backup:/backups
     restart: always
     environment:
@@ -46,7 +44,6 @@ services:
     image: mysql
     command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci --init-connect='SET NAMES UTF8;'
     volumes:
-      - ./sample-conf/MySQL:/var/lib/mysql
       - ./backup:/backups
     restart: always
     ports:
