@@ -31,7 +31,6 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - ./timezone:/etc/timezone:ro
       - ~/Library/Docker/OpenHAB/OpenHAB/config:/openhab/conf
-      - openhab_data:/openhab/userdata
       - ~/Library/Docker/OpenHAB/OpenHAB/persist:/openhab/userdata/persistence/rrd4j
       - ~/Library/Docker/OpenHAB/OpenHAB/log:/openhab/userdata/logs
       - ./backup:/backups
@@ -79,5 +78,3 @@ services:
     ports:
       - "1883:1883"
       - "9001:9001"
-volumes:
-  openhab_data:
