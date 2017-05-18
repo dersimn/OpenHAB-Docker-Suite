@@ -52,7 +52,6 @@ Inside the container execute the following queries:
 
 ## Backup
 
-	docker exec -i -t openhab_mysql_1 /bin/bash /backups/backup-mysql.bash
 	docker exec -i -t openhab_influxdb_1 /bin/bash /backups/backup-influxdb.bash
 	docker exec -i -t openhab_openhab_1 /bin/bash /backups/backup-openhab.bash
 	docker exec -i -t openhab_grafana_1 /bin/bash /backups/backup-grafana.bash
@@ -70,11 +69,6 @@ Inside the container execute the following queries:
 	exit
 	docker-compose start
 
-#### MySQL
-
-	docker exec -i -t openhab_mysql_1 /bin/bash
-	gunzip < /backups/2017-03-05T18-28-24-mysql.sql.gz | mysql -u openhab -popenhab openhab
-	exit
 
 [1]: https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-nginx-in-ubuntu-16-04
 [2]: https://www.digitalocean.com/community/tutorials/how-to-set-up-password-authentication-with-nginx-on-ubuntu-14-04
