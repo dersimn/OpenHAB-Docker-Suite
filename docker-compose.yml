@@ -24,7 +24,6 @@ services:
     image: "openhab/openhab:2.0.0-amd64"
     depends_on:
       - influxdb
-      - mysql
       - mosquitto
     restart: always
     ports:
