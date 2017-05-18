@@ -45,7 +45,6 @@ services:
       - ./backup:/backups
     restart: always
     environment:
-      INFLUXDB_ADMIN_ENABLED: "true"
       INFLUXDB_HTTP_AUTH_ENABLED: "true"
   grafana:
     image: grafana/grafana
