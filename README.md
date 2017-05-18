@@ -37,11 +37,7 @@ and copy the ID of the InfluxDB container, for e.g. `b66dd2f07b43`, then 'SSH' i
 
 Inside the container execute the following queries:
 
-	CREATE USER root WITH PASSWORD 'root' WITH ALL PRIVILEGES
-	AUTH root root
 	CREATE DATABASE openhab
-	CREATE USER openhab WITH PASSWORD 'openhab'
-	GRANT ALL ON openhab TO openhab
 	exit
 
 ## Update

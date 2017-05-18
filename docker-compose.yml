@@ -43,8 +43,6 @@ services:
       - ~/Library/Docker/OpenHAB/InfluxDB:/var/lib/influxdb
       - ./backup:/backups
     restart: always
-    environment:
-      INFLUXDB_HTTP_AUTH_ENABLED: "true"
   grafana:
     image: grafana/grafana
     restart: always
