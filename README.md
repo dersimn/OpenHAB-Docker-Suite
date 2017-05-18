@@ -4,7 +4,7 @@ OpenHAB Docker Suite
 This is my `docker-compose` suite for deploying OpenHAB and a few other services on macOS / Mac OS X or however you want to call it.  
 We'll use `~/Library/Docker/OpenHAB` to store configuration/persistence related files.
 
-I'm currently not using the PaperUI for configuration, but instead specify everything manually in the according `.items`-, `.things`-, and-so-on- files. The database for any PaperUI configuration is therefore **not** placed inside the `~/Library`, but still persisted inside of a [named docker volume][3].
+I'm currently not using the PaperUI for configuration, but instead specify everything manually in the according `.items`-, `.things`-, and-so-on- files. The database for any PaperUI configuration is therefore **not** placed inside the `~/Library`.
 
 ## Install
 
