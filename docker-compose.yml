@@ -3,6 +3,7 @@ version: '2'
 services:
   nginx:
     image: nginx
+    container_name: hma_web
     depends_on:
       - php
     restart: always
@@ -17,11 +18,13 @@ services:
       - ~/Library/Docker/OpenHAB/Nginx/htpasswd:/etc/nginx/htpasswd:ro
   php:
     image: php:fpm
+    container_name: hma_web_php
     restart: always
     volumes:
       - ~/Library/Docker/OpenHAB/Nginx/www:/html  
   openhab:
     image: "openhab/openhab:2.0.0-amd64"
+    container_name: hma_openhab
     depends_on:
       - influxdb
       - mosquitto
@@ -38,12 +41,14 @@ services:
       - ./backup:/backups
   influxdb:
     image: influxdb
+    container_name: hma_influxdb
     volumes:
       - ~/Library/Docker/OpenHAB/InfluxDB:/var/lib/influxdb
       - ./backup:/backups
     restart: always
   grafana:
     image: grafana/grafana
+    container_name: hma_grafana
     restart: always
     volumes:
       - ~/Library/Docker/OpenHAB/Grafana:/var/lib/grafana
@@ -58,6 +63,7 @@ services:
       GF_AUTH_ANONYMOUS_ORG_ROLE: "Admin"
   mosquitto:
     image: toke/mosquitto
+    container_name: hma_mosquitto
     restart: always
     ports:
       - "1883:1883"
