@@ -4,7 +4,7 @@ OpenHAB Docker Suite
 This is my `docker-compose` suite for deploying OpenHAB and a few other services on macOS / Mac OS X or however you want to call it.  
 We'll use `~/Library/Docker/OpenHAB` to store configuration/persistence related files.
 
-I'm currently not using the PaperUI for configuration, but instead specify everything manually in the according `.items`-, `.things`-, and-so-on- files. The database for any PaperUI configuration is therefore **not** placed inside the `~/Library`, but still persisted inside of a [named docker volume][3].
+I'm currently not using the PaperUI for configuration, but instead specify everything manually in the according `.items`-, `.things`-, and-so-on- files. The database for any PaperUI configuration is therefore **not** placed inside the `~/Library`.
 
 ## Install
 
@@ -27,21 +27,11 @@ Then start all containers by executing:
 
 The current Docker Image for InfluxDB doesn't support automatic creation of users and databases, so create one for OpenHAB manually:
 
-List containers with
-
-	docker ps
-
-and copy the ID of the InfluxDB container, for e.g. `b66dd2f07b43`, then 'SSH' into it with:
-
-	docker exec -it b66dd2f07b43 influx
+	docker exec -it hma_influxdb influx
 
 Inside the container execute the following queries:
 
-	CREATE USER root WITH PASSWORD 'root' WITH ALL PRIVILEGES
-	AUTH root root
 	CREATE DATABASE openhab
-	CREATE USER openhab WITH PASSWORD 'openhab'
-	GRANT ALL ON openhab TO openhab
 	exit
 
 ## Update
@@ -52,17 +42,16 @@ Inside the container execute the following queries:
 
 ## Backup
 
-	docker exec -i -t openhab_mysql_1 /bin/bash /backups/backup-mysql.bash
-	docker exec -i -t openhab_influxdb_1 /bin/bash /backups/backup-influxdb.bash
-	docker exec -i -t openhab_openhab_1 /bin/bash /backups/backup-openhab.bash
-	docker exec -i -t openhab_grafana_1 /bin/bash /backups/backup-grafana.bash
+	docker exec -i -t hma_influxdb /bin/bash /backups/backup-influxdb.bash
+	docker exec -i -t hma_openhab /bin/bash /backups/backup-openhab.bash
+	docker exec -i -t hma_grafana /bin/bash /backups/backup-grafana.bash
 
 ### Restore settings from previous Backup
 
 #### InfluxDB
 
 	docker-compose stop
-	docker run -it --rm --volumes-from openhab_influxdb_1 influxdb /bin/bash
+	docker run -it --rm --volumes-from hma_influxdb influxdb /bin/bash
 	tar xf /backups/2017-03-05T18-23-52-influxdb.tar.gz -C ~
 	influxd restore -metadir /var/lib/influxdb/meta ~/2017-03-05T18-23-52-influxdb
 	influxd restore -database openhab -datadir /var/lib/influxdb/data ~/2017-03-05T18-23-52-influxdb
@@ -70,11 +59,6 @@ Inside the container execute the following queries:
 	exit
 	docker-compose start
 
-#### MySQL
-
-	docker exec -i -t openhab_mysql_1 /bin/bash
-	gunzip < /backups/2017-03-05T18-28-24-mysql.sql.gz | mysql -u openhab -popenhab openhab
-	exit
 
 [1]: https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-nginx-in-ubuntu-16-04
 [2]: https://www.digitalocean.com/community/tutorials/how-to-set-up-password-authentication-with-nginx-on-ubuntu-14-04

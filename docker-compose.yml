@@ -3,6 +3,7 @@ version: '2'
 services:
   nginx:
     image: nginx
+    container_name: hma_web
     depends_on:
       - php
     restart: always
@@ -14,14 +15,15 @@ services:
       - ./sample-conf/Nginx/www:/html
   php:
     image: php:fpm
+    container_name: hma_web_php
     restart: always
     volumes:
       - ./sample-conf/Nginx/www:/html
   openhab:
     image: "openhab/openhab:2.0.0-amd64"
+    container_name: hma_openhab
     depends_on:
       - influxdb
-      - mysql
       - mosquitto
     restart: always
     ports:
@@ -35,30 +37,18 @@ services:
       - ./backup:/backups
   influxdb:
     image: influxdb
+    container_name: hma_influxdb
     volumes:
       - ./backup:/backups
     restart: always
-    environment:
-      INFLUXDB_ADMIN_ENABLED: "true"
-  mysql:
-    image: mysql
-    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci --init-connect='SET NAMES UTF8;'
-    volumes:
-      - ./backup:/backups
-    restart: always
-    ports:
-      - "3306:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: "root"
-      MYSQL_DATABASE: openhab
-      MYSQL_USER: openhab
-      MYSQL_PASSWORD: openhab
   grafana:
     image: grafana/grafana
+    container_name: hma_grafana
     restart: always
     volumes:
       - ./backup:/backups
     environment:
+      GF_USERS_ALLOW_SIGN_UP: "false"
       GF_SERVER_DOMAIN: "${HOSTNAME}"
       GF_SERVER_ROOT_URL: "http://${HOSTNAME}:3000/grafana"
       GF_USERS_DEFAULT_THEME: "light"
@@ -66,6 +56,7 @@ services:
       GF_AUTH_ANONYMOUS_ORG_ROLE: "Admin"
   mosquitto:
     image: toke/mosquitto
+    container_name: hma_mosquitto
     restart: always
     ports:
       - "1883:1883"
