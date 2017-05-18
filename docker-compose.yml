@@ -54,14 +54,13 @@ services:
       - ~/Library/Docker/OpenHAB/Grafana:/var/lib/grafana
       - ./backup:/backups
     environment:
-      GF_SECURITY_ADMIN_USER: "simon"
-      GF_SECURITY_ADMIN_PASSWORD: "secret"
       GF_USERS_ALLOW_SIGN_UP: "false"
       GF_SERVER_DOMAIN: "${HOSTNAME}"
       GF_SERVER_ROOT_URL: "http://${HOSTNAME}:3000/grafana"
       GF_USERS_DEFAULT_THEME: "light"
       GF_AUTH_ANONYMOUS_ENABLED: "true"
       GF_AUTH_BASIC_ENABLED: "false"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: "Admin"
   mosquitto:
     image: toke/mosquitto
     restart: always
