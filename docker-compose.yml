@@ -10,6 +10,8 @@ services:
     ports:
       - "80:80"
     volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
       - hma_www:/html
   php:
@@ -17,6 +19,8 @@ services:
     container_name: hma_web_php
     restart: always
     volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
       - hma_www:/html
   openhab:
     image: "openhab/openhab:2.0.0-amd64"
@@ -39,6 +43,8 @@ services:
     image: influxdb
     container_name: hma_influxdb
     volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
       - hma_influxdb:/var/lib/influxdb
       - ./backup:/backups
     restart: always
@@ -47,6 +53,8 @@ services:
     container_name: hma_grafana
     restart: always
     volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
       - hma_grafana:/var/lib/grafana
       - ./backup:/backups
     environment:
@@ -64,6 +72,9 @@ services:
     ports:
       - "1883:1883"
       - "9001:9001"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
 volumes:
   hma_www:
   hma_openhab_config:
