@@ -36,7 +36,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
       - hma_openhab_config:/openhab/conf
-      - hma_openhab_rrd4j:/openhab/userdata/persistence/rrd4j
+      - hma_openhab_rrd4j:/openhab/userdata/persistence
       - hma_openhab_log:/openhab/userdata/logs
       - ./backup:/backups
   influxdb:
