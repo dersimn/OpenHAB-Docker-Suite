@@ -5,5 +5,5 @@ Strategies {
 
 Items {
 	// Save everything
-	* : strategy = everyMinute, restoreOnStartup
+	* : strategy = everyMinute
 }
