@@ -39,6 +39,14 @@ services:
       - ~/Library/Docker/OpenHAB/OpenHAB/persist:/openhab/userdata/persistence
       - ~/Library/Docker/OpenHAB/OpenHAB/log:/openhab/userdata/logs
       - ./backup:/backups
+  frontail:
+    image: mthenw/frontail
+    container_name: hma_frontail
+    volumes:
+      - ~/Library/Docker/OpenHAB/OpenHAB/log:/log
+      - ./frontail-theme.css:/usr/lib/node_modules/frontail/lib/web/assets/styles/openhab.css:ro
+      - ./frontail-preset.json:/preset/openhab.json:ro
+    command: "--ui-highlight --ui-highlight-preset /preset/openhab.json -t openhab /log/openhab.log /log/events.log"
   influxdb:
     image: influxdb
     container_name: hma_influxdb
