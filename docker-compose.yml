@@ -23,7 +23,7 @@ services:
     volumes:
       - ~/Library/Docker/OpenHAB/Nginx/www:/html  
   openhab:
-    image: "openhab/openhab:2.0.0-amd64"
+    image: "openhab/openhab:2.1.0-amd64"
     container_name: hma_openhab
     depends_on:
       - influxdb
