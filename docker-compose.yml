@@ -34,7 +34,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ./timezone:/etc/timezone:ro
-      - ~/Library/Docker/OpenHAB/OpenHAB/config:/openhab/conf:ro
+      - ~/Library/Docker/OpenHAB/OpenHAB/config:/openhab/conf
       - ~/Library/Docker/OpenHAB/OpenHAB/persist:/openhab/userdata/persistence
       - hma_openhab_log:/openhab/userdata/logs
       - ./backup:/backups
