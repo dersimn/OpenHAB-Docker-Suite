@@ -42,12 +42,12 @@ services:
     image: mthenw/frontail
     container_name: hma_frontail
     ports:
-      - "9001:9001"
+      - "8001:8001"
     volumes:
       - hma_openhab_log:/log:ro
       - ./frontail-theme.css:/usr/lib/node_modules/frontail/lib/web/assets/styles/openhab.css:ro
       - ./frontail-preset.json:/preset/openhab.json:ro
-    command: "--ui-highlight --ui-highlight-preset /preset/openhab.json -t openhab /log/openhab.log /log/events.log"
+    command: "-p 8001 --ui-highlight --ui-highlight-preset /preset/openhab.json -t openhab /log/openhab.log /log/events.log"
   influxdb:
     image: influxdb
     container_name: hma_influxdb
