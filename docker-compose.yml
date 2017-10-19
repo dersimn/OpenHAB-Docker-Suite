@@ -12,7 +12,7 @@ services:
       - "443:443"
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
-      - ~/Library/Docker/OpenHAB/Nginx/www:/html
+      - ~/Library/Docker/OpenHAB/Nginx/www:/html:ro
       - ~/Library/Docker/OpenHAB/Nginx/nginx-ssl.crt:/etc/nginx/chained.crt:ro
       - ~/Library/Docker/OpenHAB/Nginx/nginx-ssl.key:/etc/nginx/key.key:ro
       - ~/Library/Docker/OpenHAB/Nginx/htpasswd:/etc/nginx/htpasswd:ro
@@ -34,7 +34,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ./timezone:/etc/timezone:ro
-      - ~/Library/Docker/OpenHAB/OpenHAB/config:/openhab/conf
+      - ~/Library/Docker/OpenHAB/OpenHAB/config:/openhab/conf:ro
       - ~/Library/Docker/OpenHAB/OpenHAB/persist:/openhab/userdata/persistence
       - hma_openhab_log:/openhab/userdata/logs
       - ./backup:/backups
@@ -42,13 +42,15 @@ services:
     image: mthenw/frontail
     container_name: hma_frontail
     volumes:
-      - ~/Library/Docker/OpenHAB/OpenHAB/log:/log
+      - hma_openhab_log:/log:ro
       - ./frontail-theme.css:/usr/lib/node_modules/frontail/lib/web/assets/styles/openhab.css:ro
       - ./frontail-preset.json:/preset/openhab.json:ro
     command: "--ui-highlight --ui-highlight-preset /preset/openhab.json -t openhab /log/openhab.log /log/events.log"
   influxdb:
     image: influxdb
     container_name: hma_influxdb
+    ports:
+      - "9001:9001"
     volumes:
       - ~/Library/Docker/OpenHAB/InfluxDB:/var/lib/influxdb
       - ./backup:/backups
