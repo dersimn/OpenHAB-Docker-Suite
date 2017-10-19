@@ -41,6 +41,8 @@ services:
   frontail:
     image: mthenw/frontail
     container_name: hma_frontail
+    ports:
+      - "9001:9001"
     volumes:
       - hma_openhab_log:/log:ro
       - ./frontail-theme.css:/usr/lib/node_modules/frontail/lib/web/assets/styles/openhab.css:ro
@@ -49,8 +51,6 @@ services:
   influxdb:
     image: influxdb
     container_name: hma_influxdb
-    ports:
-      - "9001:9001"
     volumes:
       - ~/Library/Docker/OpenHAB/InfluxDB:/var/lib/influxdb
       - ./backup:/backups
