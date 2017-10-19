@@ -23,21 +23,20 @@ services:
     volumes:
       - ~/Library/Docker/OpenHAB/Nginx/www:/html  
   openhab:
-    image: "openhab/openhab:2.1.0-amd64"
+    image: "openhab/openhab:2.1.0-amd64-debian"
     container_name: hma_openhab
     depends_on:
       - influxdb
       - mosquitto
     restart: always
     ports:
-      - "9125:9125"
-      - "9126:9126"
+      - "9125-9135:9125-9135"
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ./timezone:/etc/timezone:ro
       - ~/Library/Docker/OpenHAB/OpenHAB/config:/openhab/conf
       - ~/Library/Docker/OpenHAB/OpenHAB/persist:/openhab/userdata/persistence
-      - ~/Library/Docker/OpenHAB/OpenHAB/log:/openhab/userdata/logs
+      - hma_openhab_log:/openhab/userdata/logs
       - ./backup:/backups
   influxdb:
     image: influxdb
@@ -68,3 +67,5 @@ services:
     ports:
       - "1883:1883"
       - "9001:9001"
+volumes:
+  hma_openhab_log:
