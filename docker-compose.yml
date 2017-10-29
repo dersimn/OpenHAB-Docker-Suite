@@ -41,6 +41,7 @@ services:
   frontail:
     image: mthenw/frontail
     container_name: hma_frontail
+    restart: always
     ports:
       - "8001:8001"
     volumes:
