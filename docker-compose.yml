@@ -37,7 +37,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
       - ./backup:/backups
-      - /opt/hma/etc/openhab/config:/openhab/conf
+      - /opt/hma/etc/openhab:/openhab/conf
       - /opt/hma/var/openhab/persist:/openhab/userdata/persistence
       - hma_openhab_log:/openhab/userdata/logs
   frontail:
