@@ -12,7 +12,7 @@ services:
       - "443:443"
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
-      - /opt/hma/etc/nginx/www:/html:ro
+      - /opt/hma/var/www:/html:ro
       - /opt/hma/etc/nginx/nginx-ssl.crt:/etc/nginx/chained.crt:ro
       - /opt/hma/etc/nginx/nginx-ssl.key:/etc/nginx/key.key:ro
       - /opt/hma/etc/nginx/htpasswd:/etc/nginx/htpasswd:ro
@@ -23,7 +23,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
-      - /opt/hma/etc/nginx/www:/html  
+      - /opt/hma/var/www:/html  
   openhab:
     image: "openhab/openhab:2.1.0-amd64-debian"
     container_name: hma_openhab
