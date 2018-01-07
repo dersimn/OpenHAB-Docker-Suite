@@ -40,6 +40,7 @@ services:
       - /opt/hma/etc/openhab:/openhab/conf
       - /opt/hma/var/openhab/persist:/openhab/userdata/persistence
       - hma_openhab_log:/openhab/userdata/logs
+    tty: true
   frontail:
     image: mthenw/frontail
     container_name: hma_frontail
