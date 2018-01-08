@@ -25,7 +25,7 @@ services:
       - /etc/timezone:/etc/timezone:ro
       - /opt/hma/var/www:/html  
   openhab:
-    image: "openhab/openhab:2.1.0-amd64-debian"
+    image: "openhab/openhab:2.2.0-amd64-debian"
     container_name: hma_openhab
     depends_on:
       - influxdb
